@@ -7,10 +7,11 @@ import (
 	"strings"
 )
 
-// args: value, precision(only for float)
+// ToString args: value, precision(only for float)
 func ToString(args ...interface{}) (string, error) {
 	value := args[0]
-	var precision int = 12 // default
+	// default
+	precision := 12
 
 	switch value.(type) {
 	case string:
@@ -42,7 +43,7 @@ func ToString(args ...interface{}) (string, error) {
 	}
 }
 
-// 转换为int类型
+// ToInt 转换为int类型
 func ToInt(value interface{}) (int, error) {
 	switch value.(type) {
 	case string:
@@ -68,6 +69,7 @@ func ToInt(value interface{}) (int, error) {
 	}
 }
 
+// ToInt32 转换为Int32
 func ToInt32(value interface{}) (int32, error) {
 	switch value.(type) {
 	case string:
@@ -94,6 +96,7 @@ func ToInt32(value interface{}) (int32, error) {
 	}
 }
 
+// ToInt64 转换为Int64
 func ToInt64(value interface{}) (int64, error) {
 	switch value.(type) {
 	case string:
@@ -119,6 +122,7 @@ func ToInt64(value interface{}) (int64, error) {
 	}
 }
 
+// ToFloat32 转换为ToFloat32
 func ToFloat32(value interface{}) (float32, error) {
 	switch value.(type) {
 	case string:
@@ -145,6 +149,7 @@ func ToFloat32(value interface{}) (float32, error) {
 	}
 }
 
+// ToFloat64 转换为 float64
 func ToFloat64(value interface{}) (float64, error) {
 	switch value.(type) {
 	case string:
@@ -170,6 +175,7 @@ func ToFloat64(value interface{}) (float64, error) {
 	}
 }
 
+// U8sInt uint8 转换为 int
 func U8sInt(value interface{}) int {
 	// nil = 0
 	if value == nil {
@@ -183,7 +189,7 @@ func U8sInt(value interface{}) int {
 	return r
 }
 
-// uint8转换为str
+// U82Str uint8转换为str
 func U82Str(value interface{}) string {
 	if t, ok := value.([]uint8); ok {
 		return string(t)
@@ -191,7 +197,7 @@ func U82Str(value interface{}) string {
 	return ""
 }
 
-// bool 转换为 int
+// Bool2Int bool 转换为 int
 func Bool2Int(value bool) int {
 	switch value {
 	case true:
@@ -203,7 +209,7 @@ func Bool2Int(value bool) int {
 	}
 }
 
-// 当空值（Map长度为0）的时候返回相应数据
+// WhenNil 当空值（Map长度为0）的时候返回相应数据
 // @value 测试的值
 // @nilReturn 空值返回的值
 // @okReturn 不为空的时候返回的值

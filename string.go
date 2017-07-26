@@ -83,7 +83,7 @@ func SubstrByByte(str string, length int) string {
 		case bs[i] >= 128 && bs[i] <= 191:
 			bl++
 		case bs[i] >= 192 && bs[i] <= 253:
-			cl := 0
+			var cl int
 			switch {
 			case bs[i]&252 == 252:
 				cl = 6

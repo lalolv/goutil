@@ -7,33 +7,33 @@ import (
 	"time"
 )
 
-// 格式化时间格式，生成一个描述性的时间
+// FormatTime 格式化时间格式，生成一个描述性的时间
 func FormatTime(t time.Time) string {
 	now := time.Now()
 	duration := now.Sub(t)
 
-	var time_desc string
+	var timeDesc string
 	if duration.Seconds() < 60 {
-		time_desc = "刚刚"
+		timeDesc = "刚刚"
 	} else if duration.Minutes() < 60 {
 		t, _ := ToInt(duration.Minutes())
-		time_desc = fmt.Sprintf("%d 分钟前", t)
+		timeDesc = fmt.Sprintf("%d 分钟前", t)
 	} else if duration.Hours() < 24 {
 		t, _ := ToInt(duration.Hours())
-		time_desc = fmt.Sprintf("%d 小时前", t)
+		timeDesc = fmt.Sprintf("%d 小时前", t)
 	} else {
-		time_desc = now.Format("2006-01-02 15:04")
+		timeDesc = now.Format("2006-01-02 15:04")
 	}
 
-	return time_desc
+	return timeDesc
 }
 
-// 格式化时间格式
+// FormatTimeUnix 格式化时间格式
 func FormatTimeUnix(t int64) string {
 	return FormatTime(time.Unix(t, 0))
 }
 
-// 计算年月的天数
+// MonthCount 计算年月的天数
 // @year
 // @month
 func MonthCount(year int, month int) (days int) {
@@ -54,7 +54,7 @@ func MonthCount(year int, month int) (days int) {
 	return days
 }
 
-// 判断是否为小于今天的时间
+// JudgeSmallThenToday 判断是否为小于今天的时间
 // @time 要判断的时间
 func JudgeSmallThenToday(t int64) bool {
 	if GetTimeZero(time.Now()) > t {
@@ -63,16 +63,16 @@ func JudgeSmallThenToday(t int64) bool {
 	return false
 }
 
-// 获取指定日期的0点的时间
+// GetTimeZero 获取指定日期的0点的时间
 func GetTimeZero(t time.Time) int64 {
 	year, month, day := t.Date()
-	year_str := strconv.Itoa(year)
-	day_str := strconv.Itoa(day)
-	nowt, _ := time.Parse("2006-January-2", year_str+"-"+month.String()+"-"+day_str)
+	yearStr := strconv.Itoa(year)
+	dayStr := strconv.Itoa(day)
+	nowt, _ := time.Parse("2006-January-2", yearStr+"-"+month.String()+"-"+dayStr)
 	return nowt.Unix()
 }
 
-// 根据间隔获取指定时间
+// GetTimeByDuration 根据间隔获取指定时间
 func GetTimeByDuration(days float64) time.Time {
 	hours := int(math.Ceil(days * 24))
 	durationStr := fmt.Sprintf("%vh", hours)

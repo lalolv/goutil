@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// 设置精度
+// PrecFloat64 设置精度
 func PrecFloat64(f float64, p int) float64 {
 	// 设置精度
 	strR := strconv.FormatFloat(f, 'f', p, 64)
@@ -17,7 +17,7 @@ func PrecFloat64(f float64, p int) float64 {
 	return nr
 }
 
-// 随机生成64位小数
+// RandomFloat64 随机生成64位小数
 // @min 最小值
 // @max 最大值
 // @p 小数精度
@@ -33,7 +33,7 @@ func RandomFloat64(min, max float64, p int) float64 {
 	return nr
 }
 
-// Creates a random string based on a variety of options, using
+// RandomSpec Creates a random string based on a variety of options, using
 // supplied source of randomness.
 //
 // If start and end are both 0, start and end are set

@@ -7,9 +7,10 @@ import (
 	"net/smtp"
 )
 
+// MailInfo 邮件
 type MailInfo struct {
-	SmtpHost   string
-	SmtpPasswd string
+	SMTPHost   string
+	SMTPPasswd string
 	FromEmail  string
 	FromName   string
 	ToEmail    string
@@ -18,13 +19,13 @@ type MailInfo struct {
 	Body       string
 }
 
-// 发送邮件
+// SendMail 发送邮件
 // @mailInfo
 func SendMail(mailInfo MailInfo) {
 	b64 := base64.NewEncoding("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/")
 	// 邮件服务器信息
-	from := mail.Address{mailInfo.FromName, mailInfo.FromEmail}
-	to := mail.Address{mailInfo.ToName, mailInfo.ToEmail}
+	from := mail.Address{Name: mailInfo.FromName, Address: mailInfo.FromEmail}
+	to := mail.Address{Name: mailInfo.ToName, Address: mailInfo.ToEmail}
 	// 头文件
 	header := make(map[string]string)
 	header["From"] = from.String()
@@ -43,12 +44,12 @@ func SendMail(mailInfo MailInfo) {
 	auth := smtp.PlainAuth(
 		"",
 		mailInfo.FromEmail,
-		mailInfo.SmtpPasswd,
-		mailInfo.SmtpHost,
+		mailInfo.SMTPPasswd,
+		mailInfo.SMTPHost,
 	)
 	// 发送邮件
 	err := smtp.SendMail(
-		mailInfo.SmtpHost+":25",
+		mailInfo.SMTPHost+":25",
 		auth,
 		mailInfo.FromEmail,
 		[]string{to.Address},

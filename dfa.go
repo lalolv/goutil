@@ -5,18 +5,15 @@ import (
 	"strings"
 )
 
+// Node 结构
 type Node struct {
 	childrens map[string]*Node
 	terminate bool
 }
 
+// Dfa DFA 算法
 type Dfa struct {
 	root Node
-}
-
-var regs []*regexp.Regexp = []*regexp.Regexp{
-	regexp.MustCompile("0?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}"),
-	regexp.MustCompile("[1-9]{4,12}"),
 }
 
 // 添加敏感词
@@ -119,9 +116,16 @@ func (p *Dfa) FilterWords(text, replaceChar string) (string, bool) {
 	return result, filterFlag || flag
 }
 
+// RegularFilter 正则过滤
 func (p *Dfa) RegularFilter(text string) (string, bool) {
 	newStr := text
 	replaceFlag := false
+
+	// 正则表达式
+	regs := []*regexp.Regexp{
+		regexp.MustCompile("0?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}"),
+		regexp.MustCompile("[1-9]{4,12}"),
+	}
 	for _, v := range regs {
 		if v.MatchString(newStr) {
 			newStr = v.ReplaceAllString(newStr, "****")

@@ -11,10 +11,14 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
+// Easemob 环信
 type Easemob struct {
 	ID     string
 	Secret string
 }
+
+// ERRSTR 错误代码字符串
+const ERRSTR string = "error"
 
 // 生成环信token
 func (p *Easemob) generateToken() bson.M {
@@ -27,17 +31,17 @@ func (p *Easemob) generateToken() bson.M {
 	resp := p.doRequest(params, "https://a1.easemob.com/fashionmii/fashionmii/token", "", "POST")
 	if resp["errcode"] == 0 {
 		return resp["data"].(bson.M)
-	} else {
-		return bson.M{"access_token": "error", "expires_in": -1}
 	}
+
+	return bson.M{"access_token": "error", "expires_in": -1}
 }
 
 // 执行post请求，返回json
 // 执行请求，返回json数据
-func (p *Easemob) doRequest(requestData bson.M, requestUrl, aToken, method string) bson.M {
+func (p *Easemob) doRequest(requestData bson.M, requestURL, aToken, method string) bson.M {
 	buf, _ := json.Marshal(requestData)
 	body := bytes.NewBuffer(buf)
-	req, err := http.NewRequest(method, requestUrl, body)
+	req, err := http.NewRequest(method, requestURL, body)
 	// Header
 	req.Header.Add("Content-Type", "application/json")
 	if aToken != "" {
@@ -67,7 +71,7 @@ func (p *Easemob) doRequest(requestData bson.M, requestUrl, aToken, method strin
 	return bson.M{"data": data, "errcode": errcode}
 }
 
-// 环信注册单个用户
+// EasemobSignupSingle 环信注册单个用户
 // @uid
 // @passwd
 // @nickName
@@ -80,7 +84,7 @@ func (p *Easemob) EasemobSignupSingle(uid int64, passwd, nickName string) bool {
 	}
 	// 生成token
 	aToken := p.generateToken()
-	if aToken["access_token"] == "error" {
+	if aToken["access_token"] == ERRSTR {
 		fmt.Println("生成token失败")
 		return false
 	}
@@ -98,7 +102,7 @@ func (p *Easemob) EasemobSignupSingle(uid int64, passwd, nickName string) bool {
 	return true
 }
 
-// 环信修改用户昵称
+// EasemobNickModify 环信修改用户昵称
 // @userName
 // @passwd
 // @nickName
@@ -110,7 +114,7 @@ func (p *Easemob) EasemobNickModify(uid int64, nickName string) bool {
 	}
 
 	aToken := p.generateToken()
-	if aToken["access_token"] == "error" {
+	if aToken["access_token"] == ERRSTR {
 		fmt.Println("生成token失败")
 		return false
 	}
@@ -126,7 +130,7 @@ func (p *Easemob) EasemobNickModify(uid int64, nickName string) bool {
 	return true
 }
 
-// 发送消息
+// PushMessage 发送消息
 func (p *Easemob) PushMessage(msg string, target map[string]string) (interface{}, error) {
 	// body params
 	params := bson.M{
@@ -140,7 +144,7 @@ func (p *Easemob) PushMessage(msg string, target map[string]string) (interface{}
 	}
 
 	aToken := p.generateToken()
-	if aToken["access_token"] == "error" {
+	if aToken["access_token"] == ERRSTR {
 		fmt.Println("生成token失败")
 		return nil, errors.New("生成token失败")
 	}

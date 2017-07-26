@@ -12,21 +12,21 @@ import (
 	"io"
 )
 
-// 对字符串进行MD5哈希
+// MD5 对字符串进行MD5哈希
 func MD5(data string) string {
 	t := md5.New()
 	io.WriteString(t, data)
 	return fmt.Sprintf("%x", t.Sum(nil))
 }
 
-// 对字符串进行SHA1哈希
+// SHA1 对字符串进行SHA1哈希
 func SHA1(data string) string {
 	t := sha1.New()
 	io.WriteString(t, data)
 	return fmt.Sprintf("%x", t.Sum(nil))
 }
 
-// MD5加密算法
+// Crmd5 MD5加密算法
 func Crmd5(s string) string {
 	h := md5.New()
 	h.Write([]byte(s))
@@ -34,7 +34,7 @@ func Crmd5(s string) string {
 	return hex.EncodeToString(h.Sum(nil))
 }
 
-// AES 加密
+// AesEncrypt AES 加密
 // @origData 加密的原始数据
 // @key 密钥
 // @iv 向量
@@ -59,7 +59,7 @@ func AesEncrypt(origData, key []byte, iv []byte) ([]byte, error) {
 	return crypted, nil
 }
 
-// AES 解密
+// AesDecrypt AES 解密
 // @origData 加密的原始数据
 // @key 密钥
 // @iv 向量
@@ -81,24 +81,28 @@ func AesDecrypt(crypted, key []byte, iv []byte) ([]byte, error) {
 	return origData, nil
 }
 
+// ZeroPadding 0padding
 func ZeroPadding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{0}, padding)
 	return append(ciphertext, padtext...)
 }
 
+// ZeroUnPadding 0padding
 func ZeroUnPadding(origData []byte) []byte {
 	length := len(origData)
 	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
 }
 
+// PKCS5Padding PKCS5
 func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
 	padding := blockSize - len(ciphertext)%blockSize
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(ciphertext, padtext...)
 }
 
+// PKCS5UnPadding PKCS5
 func PKCS5UnPadding(origData []byte) ([]byte, error) {
 	length := len(origData)
 	if length == 0 {

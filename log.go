@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-// 创建日志文件
+// Log 创建日志文件
 // 保存到当前目录下的 log 子目录中
 func Log(info interface{}, prefix string) {
 	// 当前工作路径

@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// 通过 QQ 接口，获取用户资料
+// QQUserInfo 通过 QQ 接口，获取用户资料
 // @appID
 // @accessToken
 // @openID
@@ -39,7 +39,7 @@ func QQUserInfo(appID, accessToken, openID string) map[string]interface{} {
 	return uInfo
 }
 
-// 通过微信接口，获取用户资料
+// WechatUserInfo 通过微信接口，获取用户资料
 // @accessToken
 // @openID
 // https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID
@@ -70,7 +70,7 @@ func WechatUserInfo(accessToken, openID string) map[string]interface{} {
 	return uInfo
 }
 
-// 获取微博用户数据
+// WeiboUserInfo 获取微博用户数据
 // @accessToken
 // @uid
 func WeiboUserInfo(accessToken, uid string) map[string]interface{} {

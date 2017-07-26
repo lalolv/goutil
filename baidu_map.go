@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-// 根据经纬度和IP地址，获取省份和城市
+// BaiduCity 根据经纬度和IP地址，获取省份和城市
 func BaiduCity(ak, remoteAddr string, lat, lng float64) (string, string, string) {
 	// 经纬度类型
 	coor := "bd09ll"
@@ -61,7 +61,7 @@ func BaiduCity(ak, remoteAddr string, lat, lng float64) (string, string, string)
 	return prov, city, dist
 }
 
-// 根据城市名称，解析经纬度
+// BaiduLoc 根据城市名称，解析经纬度
 func BaiduLoc(ak, city string) (float64, float64) {
 	// 初始化经纬度
 	lat, lng := 0.00, 0.00

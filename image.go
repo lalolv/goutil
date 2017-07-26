@@ -7,11 +7,10 @@ import (
 	"net/http"
 )
 
-// 获取七牛图像比例
-func QiniuRatio(qnUrl, pic string) float64 {
+// QiniuRatio 获取七牛图像比例
+func QiniuRatio(qnURL, pic string) float64 {
 	// 获取图像的比例
-	ratio := 1.00
-	resp, err := http.Get(fmt.Sprintf("http://%s/%s?imageInfo", qnUrl, pic))
+	resp, err := http.Get(fmt.Sprintf("http://%s/%s?imageInfo", qnURL, pic))
 	var pInfo map[string]interface{}
 
 	if err != nil {
@@ -30,11 +29,10 @@ func QiniuRatio(qnUrl, pic string) float64 {
 		return 1.00
 	}
 
-	ratio = PrecFloat64(height/width, 6)
+	ratio := PrecFloat64(height/width, 6)
 	if ratio > 0 {
 		return ratio
-	} else {
-		return 1.00
 	}
 
+	return 1.00
 }
