@@ -70,6 +70,39 @@ func WechatUserInfo(accessToken, openID string) map[string]interface{} {
 	return uInfo
 }
 
+// WechatJSCode 通过微信接口，用户CODE，获取open_id等数据
+// @jsCode
+// @appID
+// @secret
+func WechatJSCode(jsCode, appID, secret string) map[string]interface{} {
+
+	// qqAPI接口
+	url := "https://api.weixin.qq.com/sns/jscode2session?"
+	url += "js_code=" + jsCode + "&"
+	url += "appid=" + appID + "&"
+	url += "secret=" + secret + "&"
+	url += "grant_type=authorization_code"
+	// fmt.Println(url)
+	resp, err := http.Get(url)
+	if err != nil {
+		fmt.Println("weixin api get error: " + err.Error())
+	}
+
+	// 读取数据资料
+	var uInfo map[string]interface{}
+	if resp != nil {
+		defer resp.Body.Close()
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			fmt.Println("weixin api io error: " + err.Error())
+		}
+
+		json.Unmarshal(body, &uInfo)
+	}
+
+	return uInfo
+}
+
 // WeiboUserInfo 获取微博用户数据
 // @accessToken
 // @uid
