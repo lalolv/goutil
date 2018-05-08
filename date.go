@@ -22,7 +22,7 @@ func FormatTime(t time.Time) string {
 		t, _ := ToInt(duration.Hours())
 		timeDesc = fmt.Sprintf("%d 小时前", t)
 	} else {
-		timeDesc = now.Format("2006-01-02 15:04")
+		timeDesc = t.Format("2006-01-02 15:04")
 	}
 
 	return timeDesc
