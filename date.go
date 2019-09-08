@@ -57,10 +57,7 @@ func MonthCount(year int, month int) (days int) {
 // JudgeSmallThenToday 判断是否为小于今天的时间
 // @time 要判断的时间
 func JudgeSmallThenToday(t int64) bool {
-	if GetTimeZero(time.Now()) > t {
-		return true
-	}
-	return false
+	return GetTimeZero(time.Now()) > t
 }
 
 // GetTimeZero 获取指定日期的0点的时间
@@ -69,6 +66,7 @@ func GetTimeZero(t time.Time) int64 {
 	yearStr := strconv.Itoa(year)
 	dayStr := strconv.Itoa(day)
 	nowt, _ := time.Parse("2006-January-2", yearStr+"-"+month.String()+"-"+dayStr)
+
 	return nowt.Unix()
 }
 
@@ -77,5 +75,6 @@ func GetTimeByDuration(days float64) time.Time {
 	hours := int(math.Ceil(days * 24))
 	durationStr := fmt.Sprintf("%vh", hours)
 	d, _ := time.ParseDuration(durationStr)
+
 	return time.Now().Add(d)
 }

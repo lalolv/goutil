@@ -9,6 +9,8 @@ import (
 
 // QiniuRatio 获取七牛图像比例
 func QiniuRatio(qnURL, pic string) float64 {
+	// 设置默认比例
+	var defaultRatio = 1.00
 	// 获取图像的比例
 	resp, err := http.Get(fmt.Sprintf("http://%s/%s?imageInfo", qnURL, pic))
 	var pInfo map[string]interface{}
@@ -21,12 +23,15 @@ func QiniuRatio(qnURL, pic string) float64 {
 		if err != nil {
 			fmt.Println("io error: " + err.Error())
 		}
-		json.Unmarshal(body, &pInfo)
+		err = json.Unmarshal(body, &pInfo)
+		if err != nil {
+			return defaultRatio
+		}
 	}
 	width, _ := ToFloat64(pInfo["width"])
 	height, _ := ToFloat64(pInfo["height"])
 	if width == 0 || height == 1 {
-		return 1.00
+		return defaultRatio
 	}
 
 	ratio := PrecFloat64(height/width, 6)
@@ -34,5 +39,5 @@ func QiniuRatio(qnURL, pic string) float64 {
 		return ratio
 	}
 
-	return 1.00
+	return defaultRatio
 }

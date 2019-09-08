@@ -64,7 +64,10 @@ func (p *Easemob) doRequest(requestData bson.M, requestURL, aToken, method strin
 		defer resp.Body.Close()
 		if resp.StatusCode == 200 {
 			r, _ := ioutil.ReadAll(resp.Body)
-			json.Unmarshal(r, &data)
+			err = json.Unmarshal(r, &data)
+			if err != nil {
+				errcode = 2
+			}
 		} else {
 			data = bson.M{"HTTP_CODE": resp.StatusCode}
 		}
@@ -98,7 +101,7 @@ func (p *Easemob) EasemobSignupSingle(uid int64, passwd, nickName string) bool {
 		aToken["access_token"].(string), "POST",
 	)
 
-	if data["errcode"] == 1 {
+	if data["errcode"] != 0 {
 		fmt.Println("注册失败")
 		return false
 	}

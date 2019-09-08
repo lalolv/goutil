@@ -33,7 +33,10 @@ func QQUserInfo(appID, accessToken, openID string) map[string]interface{} {
 			fmt.Println("qq api io error: " + err.Error())
 		}
 
-		json.Unmarshal(body, &uInfo)
+		err = json.Unmarshal(body, &uInfo)
+		if err != nil {
+			fmt.Println("解析失败: " + err.Error())
+		}
 	}
 
 	return uInfo
