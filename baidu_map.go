@@ -24,8 +24,8 @@ func BaiduCity(ak, remoteAddr string, lat, lng float64) (string, string, string)
 		resp, _ := http.Get(url)
 		if resp != nil {
 			body, _ := ioutil.ReadAll(resp.Body)
-			json.Unmarshal(body, &ret)
-			if ret != nil && ret["result"] != nil && ret["status"].(float64) == 0 {
+			err := json.Unmarshal(body, &ret)
+			if err == nil && ret != nil && ret["result"] != nil && ret["status"].(float64) == 0 {
 				result := ret["result"].(map[string]interface{})
 				addr := result["addressComponent"].(map[string]interface{})
 				prov = addr["province"].(string)
@@ -46,8 +46,8 @@ func BaiduCity(ak, remoteAddr string, lat, lng float64) (string, string, string)
 		resp, _ := http.Get(url)
 		if resp != nil {
 			body, _ := ioutil.ReadAll(resp.Body)
-			json.Unmarshal(body, &ret)
-			if ret != nil && ret["status"] != nil && ret["status"].(float64) == 0 {
+			err := json.Unmarshal(body, &ret)
+			if err == nil && ret != nil && ret["status"] != nil && ret["status"].(float64) == 0 {
 				content := ret["content"].(map[string]interface{})
 				addr := content["address_detail"].(map[string]interface{})
 				prov = addr["province"].(string)
@@ -74,8 +74,8 @@ func BaiduLoc(ak, city string) (float64, float64) {
 	resp, _ := http.Get(url)
 	if resp != nil {
 		body, _ := ioutil.ReadAll(resp.Body)
-		json.Unmarshal(body, &ret)
-		if ret != nil && ret["result"] != nil && ret["status"].(float64) == 0 {
+		err := json.Unmarshal(body, &ret)
+		if err == nil && ret != nil && ret["result"] != nil && ret["status"].(float64) == 0 {
 			result := ret["result"].(map[string]interface{})
 			loc := result["location"].(map[string]interface{})
 			lat = loc["lat"].(float64)

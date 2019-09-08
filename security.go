@@ -15,21 +15,32 @@ import (
 // MD5 对字符串进行MD5哈希
 func MD5(data string) string {
 	t := md5.New()
-	io.WriteString(t, data)
+	_, err := io.WriteString(t, data)
+	if err != nil {
+		return ""
+	}
+
 	return fmt.Sprintf("%x", t.Sum(nil))
 }
 
 // SHA1 对字符串进行SHA1哈希
 func SHA1(data string) string {
 	t := sha1.New()
-	io.WriteString(t, data)
+	_, err := io.WriteString(t, data)
+	if err != nil {
+		return ""
+	}
+
 	return fmt.Sprintf("%x", t.Sum(nil))
 }
 
 // Crmd5 MD5加密算法
 func Crmd5(s string) string {
 	h := md5.New()
-	h.Write([]byte(s))
+	_, err := h.Write([]byte(s))
+	if err != nil {
+		return ""
+	}
 
 	return hex.EncodeToString(h.Sum(nil))
 }

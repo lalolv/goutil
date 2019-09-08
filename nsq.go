@@ -11,7 +11,10 @@ func PushNSQ(server, topic string, body interface{}) *nsq.Producer {
 	config := nsq.NewConfig()
 	w, _ := nsq.NewProducer(server, config)
 	bodyJSON, _ := json.Marshal(body)
-	w.Publish(topic, bodyJSON)
+	err := w.Publish(topic, bodyJSON)
+	if err != nil {
+		return nil
+	}
 
 	return w
 }

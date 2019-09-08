@@ -42,6 +42,9 @@ func (p *Easemob) doRequest(requestData bson.M, requestURL, aToken, method strin
 	buf, _ := json.Marshal(requestData)
 	body := bytes.NewBuffer(buf)
 	req, err := http.NewRequest(method, requestURL, body)
+	if err != nil {
+		fmt.Println("请求错误:" + err.Error())
+	}
 	// Header
 	req.Header.Add("Content-Type", "application/json")
 	if aToken != "" {

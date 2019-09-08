@@ -46,10 +46,13 @@ func (p *Dfa) BuildTree(words []string) {
 
 // IsTreeBuild 判断过滤的树是否已经生成了
 func (p *Dfa) IsTreeBuild() bool {
-	if len(p.root.childrens) == 0 {
-		return false
+	var isBuild bool
+
+	if len(p.root.childrens) > 0 {
+		isBuild = true
 	}
-	return false
+
+	return isBuild
 }
 
 // IsContain 判断是否包含敏感词
@@ -133,14 +136,4 @@ func (p *Dfa) RegularFilter(text string) (string, bool) {
 		}
 	}
 	return newStr, replaceFlag
-}
-
-func getLastString(strs []rune, j int) string {
-	str := []string{}
-	for i, s := range strs {
-		if i >= j {
-			str = append(str, string(s))
-		}
-	}
-	return strings.Join(str, "")
 }

@@ -78,7 +78,7 @@ func SubstrByByte(str string, length int) string {
 	bl := 0
 	for i := len(bs) - 1; i >= 0; i-- {
 		switch {
-		case bs[i] >= 0 && bs[i] <= 127:
+		case bs[i] > 0 && bs[i] <= 127:
 			return string(bs[:i+1])
 		case bs[i] >= 128 && bs[i] <= 191:
 			bl++
@@ -102,6 +102,7 @@ func SubstrByByte(str string, length int) string {
 			return string(bs[:i])
 		}
 	}
+
 	return ""
 }
 

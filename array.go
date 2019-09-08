@@ -20,10 +20,7 @@ func InArray(arrs []interface{}, value interface{}, equalMethod func(interface{}
 // @b
 // @返回他们是否相等
 func generalEqualMethod(a interface{}, b interface{}) bool {
-	if a == b {
-		return true
-	}
-	return false
+	return a == b
 }
 
 // InStringArray 判断是否在String数组里面
@@ -51,7 +48,7 @@ func RemoveDuplicatesInt64(elements []int64) []int64 {
 	result := []int64{}
 
 	for v := range elements {
-		if encountered[elements[v]] == true {
+		if encountered[elements[v]] {
 			// Do not add duplicate.
 		} else {
 			// Record this element as an encountered element.
