@@ -67,7 +67,10 @@ func WechatUserInfo(accessToken, openID string) map[string]interface{} {
 			fmt.Println("weixin api io error: " + err.Error())
 		}
 
-		json.Unmarshal(body, &uInfo)
+		err = json.Unmarshal(body, &uInfo)
+		if err != nil {
+			fmt.Println("解析失败: " + err.Error())
+		}
 	}
 
 	return uInfo
@@ -100,7 +103,10 @@ func WechatJSCode(jsCode, appID, secret string) map[string]interface{} {
 			fmt.Println("weixin api io error: " + err.Error())
 		}
 
-		json.Unmarshal(body, &uInfo)
+		err = json.Unmarshal(body, &uInfo)
+		if err != nil {
+			fmt.Println("解析失败: " + err.Error())
+		}
 	}
 
 	return uInfo
@@ -127,7 +133,10 @@ func WeiboUserInfo(accessToken, uid string) map[string]interface{} {
 		if err != nil {
 			fmt.Println("io error: " + err.Error())
 		}
-		json.Unmarshal(body, &uInfo)
+		err = json.Unmarshal(body, &uInfo)
+		if err != nil {
+			fmt.Println("解析失败: " + err.Error())
+		}
 	}
 
 	return uInfo

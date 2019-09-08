@@ -130,7 +130,7 @@ func (p *Easemob) EasemobNickModify(uid int64, nickName string) bool {
 		fmt.Sprintf("https://a1.easemob.com/fashionmii/fashionmii/users/%d", uid),
 		aToken["access_token"].(string), "PUT")
 
-	if data["errcode"] == 1 {
+	if data["errcode"] != 0 {
 		return false
 	}
 	return true
