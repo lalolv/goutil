@@ -102,11 +102,8 @@ func (p *Easemob) EasemobSignupSingle(uid int64, passwd, nickName string) bool {
 	)
 
 	errcode, _ := ToInt(data["errcode"])
-	if errcode > 0 {
-		fmt.Println("注册失败")
-		return false
-	}
-	return true
+
+	return errcode == 0
 }
 
 // EasemobNickModify 环信修改用户昵称
@@ -132,10 +129,8 @@ func (p *Easemob) EasemobNickModify(uid int64, nickName string) bool {
 		aToken["access_token"].(string), "PUT")
 
 	errcode, _ := ToInt(data["errcode"])
-	if errcode > 0 {
-		return false
-	}
-	return true
+
+	return errcode == 0
 }
 
 // PushMessage 发送消息
