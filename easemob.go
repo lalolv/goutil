@@ -101,7 +101,8 @@ func (p *Easemob) EasemobSignupSingle(uid int64, passwd, nickName string) bool {
 		aToken["access_token"].(string), "POST",
 	)
 
-	if data["errcode"] != 0 {
+	errcode, _ := ToInt(data["errcode"])
+	if errcode > 0 {
 		fmt.Println("注册失败")
 		return false
 	}
@@ -130,7 +131,8 @@ func (p *Easemob) EasemobNickModify(uid int64, nickName string) bool {
 		fmt.Sprintf("https://a1.easemob.com/fashionmii/fashionmii/users/%d", uid),
 		aToken["access_token"].(string), "PUT")
 
-	if data["errcode"] != 0 {
+	errcode, _ := ToInt(data["errcode"])
+	if errcode > 0 {
 		return false
 	}
 	return true
