@@ -189,6 +189,20 @@ func U8sInt(value interface{}) int {
 	return r
 }
 
+// U8sFloat64 uint8 转换为 float64
+func U8sFloat64(value interface{}) float64 {
+	// nil = 0
+	if value == nil {
+		return 0
+	}
+	// err = 0
+	r, err := strconv.ParseFloat(string(value.([]uint8)), 64)
+	if err != nil {
+		r = 0
+	}
+	return r
+}
+
 // U82Str uint8转换为str
 func U82Str(value interface{}) string {
 	if t, ok := value.([]uint8); ok {
