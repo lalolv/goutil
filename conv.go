@@ -2,7 +2,6 @@ package goutil
 
 import (
 	"errors"
-	"fmt"
 	"reflect"
 	"strconv"
 	"strings"
@@ -174,12 +173,6 @@ func ToFloat64(value interface{}) (float64, error) {
 	default:
 		return float64(0), errors.New("unknown type")
 	}
-}
-
-// Decimal2 保留2位小数
-func Decimal2(value float64) float64 {
-	value, _ = strconv.ParseFloat(fmt.Sprintf("%.2f", value), 64)
-	return value
 }
 
 // U8sInt uint8 转换为 int
