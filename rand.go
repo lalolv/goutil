@@ -4,6 +4,7 @@ import (
 	"math"
 	"math/rand"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -109,4 +110,28 @@ func RandomSpec(count uint, start, end int, letters, numbers bool, chars []rune)
 	}
 
 	return string(buffer)
+}
+
+// TinyNo 短单号
+func TinyNo() string {
+	now := time.Now()
+	tt := now.Local().Format("06-01-02-15-04-05")
+
+	var outstr string
+	for _, t := range strings.Split(tt, "-") {
+		tn, _ := ToInt(t)
+		if tn >= 10 && tn < 26 {
+			tr := rune(tn + 65)
+			outstr += string(tr)
+		} else if tn >= 48 && tn <= 57 {
+			tr := rune(tn)
+			outstr += string(tr)
+		} else {
+			outstr += strings.TrimLeft(t, "0")
+		}
+
+		return outstr
+	}
+
+	return outstr
 }
