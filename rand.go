@@ -129,8 +129,6 @@ func TinyNo() string {
 		} else {
 			outstr += strings.TrimLeft(t, "0")
 		}
-
-		return outstr
 	}
 
 	return outstr
